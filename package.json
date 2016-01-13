@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "./node_modules/nodemon/bin/nodemon.js server.js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,10 @@
   "dependencies": {
     "express": "^4.13.3",
     "lodash": "^4.0.0",
-    "nodemon": "^1.8.1",
     "socket.io": "^1.4.4"
   },
   "devDependencies": {
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "nodemon": "^1.8.1"
   }
 }
