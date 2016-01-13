@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/mbburch/votestance/issues"
   },
-  "homepage": "https://github.com/mbburch/votestance#readme"
+  "homepage": "https://github.com/mbburch/votestance#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "lodash": "^4.0.0",
+    "socket.io": "^1.4.4"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4"
+  }
 }
