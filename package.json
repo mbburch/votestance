@@ -1,0 +1,24 @@
+{
+  "name": "votestance",
+  "version": "1.0.0",
+  "description": "Create online polls and gather votes",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbburch/votestance.git"
+  },
+  "keywords": [
+    "vote",
+    "poll"
+  ],
+  "author": "MB Burch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mbburch/votestance/issues"
+  },
+  "homepage": "https://github.com/mbburch/votestance#readme"
+}
