@@ -99,11 +99,11 @@ describe('Server', () => {
     beforeEach(() => {
       var pollData = fixtures.validPoll;
       this.poll = new Poll(pollData);
-      app.polls.testPoll = this.poll;
+      app.polls[this.poll.id] = this.poll;
     });
 
     it('should not return 404', (done) => {
-      this.request.get('polls/testPoll', (error, response) => {
+      this.request.get('polls/' + this.poll.id, (error, response) => {
         if (error) { done(error); }
 
         assert.notEqual(response.statusCode, 404);
@@ -112,7 +112,7 @@ describe('Server', () => {
     });
 
     it('should return a page that has poll title and question', (done) => {
-      this.request.get('/polls/testPoll', (error, response) => {
+      this.request.get('polls/' + this.poll.id, (error, response) => {
         if (error) { done(error); }
 
         assert(response.body.includes(this.poll.title),
@@ -124,7 +124,7 @@ describe('Server', () => {
     });
 
     it('should display poll options and related votes', (done) => {
-      this.request.get('/polls/testPoll', (error, response) => {
+      this.request.get('polls/' + this.poll.id, (error, response) => {
         if (error) { done(error); }
 
         assert(response.body.includes(this.poll.responses[0]),
@@ -136,11 +136,53 @@ describe('Server', () => {
     });
 
     it('should display link to voting page', (done) => {
-      this.request.get('/polls/testPoll', (error, response) => {
+      this.request.get('polls/' + this.poll.id, (error, response) => {
         if (error) { done(error); }
 
         assert(response.body.includes(this.poll.voterUrl),
                `"${response.body}" does not include "${this.poll.voterUrl}".`);
+        done();
+      });
+    });
+
+  });
+
+  describe('GET /vote/:votePageId', () => {
+
+    beforeEach(() => {
+      var pollData = fixtures.validPoll;
+      this.poll = new Poll(pollData);
+      app.polls[this.poll.id] = this.poll;
+      this.votePageId = this.poll.votePageId;
+    });
+
+    it('should not return 404', (done) => {
+      this.request.get('/vote/' + this.votePageId, (error, response) => {
+        if (error) { done(error); }
+
+        assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+
+    it('should return a page that has poll title and question', (done) => {
+      this.request.get('/vote/' + this.votePageId, (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes(this.poll.title),
+               `"${response.body}" does not include "${this.poll.title}".`);
+       assert(response.body.includes(this.poll.question),
+              `"${response.body}" does not include "${this.poll.question}".`);
+        done();
+      });
+    });
+
+    it('should display vote option buttons', (done) => {
+      this.request.get('/vote/' + this.votePageId, (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes(this.poll.responses[0]),
+               `"${response.body}" does not include "${this.poll.responses[0]}".`);
         done();
       });
     });
