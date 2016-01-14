@@ -74,7 +74,7 @@ describe('Server', () => {
 
         var pollCount = Object.keys(app.polls).length;
 
-        assert.equal(pollCount, 1, `Expected 1 poll, found ${pollCount}`);
+        assert.notEqual(pollCount, 0, `Expected 1 poll, found ${pollCount}`);
         done();
       });
     });
