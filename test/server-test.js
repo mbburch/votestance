@@ -1,6 +1,7 @@
 const assert = require('assert');
 const app = require('../server');
 const request = require('request');
+const Poll = require('../lib/poll');
 const fixtures = require('./fixtures');
 
 describe('Server', () => {
@@ -52,11 +53,13 @@ describe('Server', () => {
   describe('POST /polls', () => {
 
     beforeEach(() => {
-      app.locals.polls = {};
+      app.polls = {};
     });
 
     it('should not return 404', (done) => {
-      this.request.post('/polls', (error, response) => {
+      var payload = { poll: fixtures.validPoll };
+
+      this.request.post('/polls', { form: payload }, (error, response) => {
         if (error) { done(error); }
         assert.notEqual(response.statusCode, 404);
         done();
@@ -69,13 +72,11 @@ describe('Server', () => {
       this.request.post('/polls', { form: payload }, (error, response) => {
         if (error) { done(error); }
 
-        var pollCount = Object.keys(app.local.polls).length;
+        var pollCount = Object.keys(app.polls).length;
 
         assert.equal(pollCount, 1, `Expected 1 poll, found ${pollCount}`);
         done();
       });
-      assert(true);
-      done();
     });
 
     it('should redirect the user to their new poll admin page', (done) => {
@@ -83,7 +84,9 @@ describe('Server', () => {
 
       this.request.post('/polls', { form: payload }, (error, response) => {
         if (error) { done(error); }
-        var newPollId = Object.keys(app.locals.polls)[0];
+
+        var newPollId = Object.keys(app.polls)[0];
+
         assert.equal(response.headers.location, '/polls/' + newPollId);
         done();
       });
@@ -94,25 +97,50 @@ describe('Server', () => {
   describe('GET /polls/:id', () => {
 
     beforeEach(() => {
-      app.locals.polls.testPoll = fixtures.validPoll;
-
+      var pollData = fixtures.validPoll;
+      this.poll = new Poll(pollData);
+      app.polls.testPoll = this.poll;
     });
 
     it('should not return 404', (done) => {
       this.request.get('polls/testPoll', (error, response) => {
         if (error) { done(error); }
+
         assert.notEqual(response.statusCode, 404);
         done();
       });
     });
 
-    it('should return a page that has the title of the poll', (done) => {
-      var poll = app.locals.polls.testPoll;
-
+    it('should return a page that has poll title and question', (done) => {
       this.request.get('/polls/testPoll', (error, response) => {
         if (error) { done(error); }
-        assert(response.body.includes(poll.title),
-               `"${response.body}" does not include "${poll.title}".`);
+
+        assert(response.body.includes(this.poll.title),
+               `"${response.body}" does not include "${this.poll.title}".`);
+       assert(response.body.includes(this.poll.question),
+              `"${response.body}" does not include "${this.poll.question}".`);
+        done();
+      });
+    });
+
+    it('should display poll options and related votes', (done) => {
+      this.request.get('/polls/testPoll', (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes(this.poll.responses[0]),
+               `"${response.body}" does not include "${this.poll.responses[0]}".`);
+       assert(response.body.includes(this.poll.responseVotes[this.poll.responses[0]]),
+              `"${response.body}" does not include "${this.poll.responseVotes[this.poll.responses[0]]}".`);
+        done();
+      });
+    });
+
+    it('should display link to voting page', (done) => {
+      this.request.get('/polls/testPoll', (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes(this.poll.voterUrl),
+               `"${response.body}" does not include "${this.poll.voterUrl}".`);
         done();
       });
     });

@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <h2><%= adminPoll.title %></h2>
+    <h2><%= adminPoll.question %></h2>
+    <div class='poll-responses'>
+      <h2>Please vote for one option:</h2>
+      <ul>
+        <% adminPoll.responses.forEach(function(response) { %>
+          <li><button class='<%= response %>'><%= response %></button></li>
+        <% }); %>
+      </ul>
+    </div>
+    <script src='/client.js'></script>
+  </body>
+</html>

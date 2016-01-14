@@ -5,9 +5,20 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <h1><%= poll.title %></h1>
-    <div id="connection-count"></div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/client.js"></script>
+    <h2><%= adminPoll.title %></h2>
+    <h2><%= adminPoll.question %></h2>
+    <div class='response-options'>
+      <ul>
+        <% adminPoll.responses.forEach(function(response) { %>
+          <li class='<%= response %>-count'>Option: <%= response %>, Votes: <%= adminPoll.responseVotes[response] %></li>
+        <% }); %>
+      </ul>
+    </div>
+    <div class='links'>
+      <h3 id='admin-link'>Use this link to access and manage your poll options: <a href='<%= adminPoll.adminUrl %>'>Poll Admin Page</a></h3>
+      <h3 id='vote-link'>Share this link to let others vote: <a href='<%= adminPoll.voterUrl %>'>Poll Voting Page</a></h3>
+    </div>
+    <div class='status-<%= adminPoll.open %>'
+    <script src='/client.js'></script>
   </body>
 </html>
