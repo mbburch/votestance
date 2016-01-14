@@ -74,7 +74,7 @@ describe('Server', () => {
 
         var pollCount = Object.keys(app.polls).length;
 
-        assert.equal(pollCount, 1, `Expected 1 poll, found ${pollCount}`);
+        assert.notEqual(pollCount, 0, `Expected 1 poll, found ${pollCount}`);
         done();
       });
     });
@@ -152,12 +152,11 @@ describe('Server', () => {
     beforeEach(() => {
       var pollData = fixtures.validPoll;
       this.poll = new Poll(pollData);
-      app.polls[this.poll.id] = this.poll;
-      this.votePageId = this.poll.votePageId;
+      app.polls[this.poll.votePageId] = this.poll;
     });
 
     it('should not return 404', (done) => {
-      this.request.get('/vote/' + this.votePageId, (error, response) => {
+      this.request.get('/vote/' + this.poll.votePageId, (error, response) => {
         if (error) { done(error); }
 
         assert.notEqual(response.statusCode, 404);
@@ -166,7 +165,7 @@ describe('Server', () => {
     });
 
     it('should return a page that has poll title and question', (done) => {
-      this.request.get('/vote/' + this.votePageId, (error, response) => {
+      this.request.get('/vote/' + this.poll.votePageId, (error, response) => {
         if (error) { done(error); }
 
         assert(response.body.includes(this.poll.title),
@@ -178,7 +177,7 @@ describe('Server', () => {
     });
 
     it('should display vote option buttons', (done) => {
-      this.request.get('/vote/' + this.votePageId, (error, response) => {
+      this.request.get('/vote/' + this.poll.votePageId, (error, response) => {
         if (error) { done(error); }
 
         assert(response.body.includes(this.poll.responses[0]),

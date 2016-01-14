@@ -21,6 +21,7 @@ app.post('/polls', (request, response) => {
   var poll = new Poll(request.body.poll);
 
   app.polls[poll.id] = poll;
+  app.polls[poll.votePageId] = poll;
 
   response.redirect('/polls/' + poll.id);
 });
@@ -32,10 +33,7 @@ app.get('/polls/:id', (request, response) => {
 });
 
 app.get('/vote/:votePageId', (request, response) => {
-  var values = _.values(app.polls);
-  var poll = _.find(values, (value) => {
-    return value.votePageId === request.params.votePageId;
-  });
+  var poll = app.polls[request.params.votePageId];
 
   response.render('vote', { voterPoll: poll });
 });
