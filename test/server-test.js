@@ -123,6 +123,28 @@ describe('Server', () => {
       });
     });
 
+    it('should display poll options and related votes', (done) => {
+      this.request.get('/polls/testPoll', (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes(this.poll.responses[0]),
+               `"${response.body}" does not include "${this.poll.responses[0]}".`);
+       assert(response.body.includes(this.poll.responseVotes[this.poll.responses[0]]),
+              `"${response.body}" does not include "${this.poll.responseVotes[this.poll.responses[0]]}".`);
+        done();
+      });
+    });
+
+    it('should display link to voting page', (done) => {
+      this.request.get('/polls/testPoll', (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes(this.poll.voterUrl),
+               `"${response.body}" does not include "${this.poll.voterUrl}".`);
+        done();
+      });
+    });
+
   });
 
 });
