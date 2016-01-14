@@ -4,17 +4,32 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h1 id="app-title"><%= title %></h1>
-    <form id="new-poll-form" action="/polls" method="post">
-      <fieldset>
-        <legend class="form-heading">Create a New Poll</legend>
-        <input required type="text" name="poll[title]" placeholder="Poll Title">
-        <input required type="text" name="poll[question]" placeholder="What are you asking?">
-        <div id="responses"><input required type="text" name="poll[responses][]" placeholder="Response"></div>
-        <button id="add-response">Add a Response</button>
-        <button id="submit-poll" type="submit" name="submit" class="btn btn-default">Submit Poll</button>
-      </fieldset>
-    </form>
+    <% include ./partials/navbar %>
+    <div class="container">
+      <div class="row">
+        <h2 class="form-heading center-align">Create a New Poll</h2>
+        <form id="new-poll-form" action="/polls" method="post">
+          <div class="row">
+            <div class="input-field col s8 offset-s2">
+              <input required type="text" name="poll[title]" placeholder="Poll Title">
+            </div>
+            <div class="input-field col s8 offset-s2">
+              <input required type="text" name="poll[question]" placeholder="What are you asking?">
+            </div>
+            <div class="input-field col s8 offset-s2">
+              <div id="responses"><input required type="text" name="poll[responses][]" placeholder="Response"></div>
+            </div>
+            <div class="response-button center-align">
+              <button id="add-response" class="btn waves-effect waves-light teal darken-3">Add a Response<i class="material-icons right">add</i></button>
+            </div><br>
+            <div class="submit-button center-align">
+              <button id="submit-poll" class="btn waves-effect waves-light teal darken-2" type="submit" name="action">Submit Poll<i class="material-icons right">send</i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="/jquery.js"></script>
     <script src="/responses.js"></script>
     <% include ./partials/body-materialize %>
