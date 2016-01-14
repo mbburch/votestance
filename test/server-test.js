@@ -104,13 +104,15 @@ describe('Server', () => {
       });
     });
 
-    it('should return a page that has the title of the poll', (done) => {
+    it('should return a page that has poll title and question', (done) => {
       var poll = app.locals.polls.testPoll;
 
       this.request.get('/polls/testPoll', (error, response) => {
         if (error) { done(error); }
         assert(response.body.includes(poll.title),
                `"${response.body}" does not include "${poll.title}".`);
+       assert(response.body.includes(poll.question),
+              `"${response.body}" does not include "${poll.question}".`);
         done();
       });
     });

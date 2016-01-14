@@ -4,15 +4,15 @@
     <title><%= title %></title>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <form action="/polls" method="post">
+    <h1 id="app-title"><%= title %></h1>
+    <form id="new-poll-form" action="/polls" method="post">
       <fieldset>
-        <legend>Create a New Poll</legend>
-        <input type="text" name="poll[title]" placeholder="Poll Title">
-        <input type="text" name="poll[question]" placeholder="What are you asking?">
-        <div id="responses"></div>
+        <legend class="form-heading">Create a New Poll</legend>
+        <input required type="text" name="poll[title]" placeholder="Poll Title">
+        <input required type="text" name="poll[question]" placeholder="What are you asking?">
+        <div id="responses"><input required type="text" name="poll[responses][]" placeholder="Response"></div>
         <button id="add-response">Add a Response</button>
-        <input type="submit" value="Submit">
+        <button id="submit-poll" type="submit" name="submit">Submit Poll</button>
       </fieldset>
     </form>
     <script src="/jquery.js"></script>
