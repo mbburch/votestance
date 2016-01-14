@@ -5,15 +5,13 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <h2><%= poll.title %></h2>
-    <h2><%= poll.question %></h2>
+    <h2><%= adminPoll.title %></h2>
+    <h2><%= adminPoll.question %></h2>
     <ul>
-      <% poll.responses.forEach(function(response) { %>
+      <% adminPoll.responses.forEach(function(response) { %>
         <li><%= response %></li>
       <% }); %>
     </ul>
-    <div id="connection-count"></div>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
   </body>
 </html>

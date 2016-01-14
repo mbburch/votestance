@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <h2><%= poll.title %></h2>
+    <h2><%= poll.question %></h2>
+    <ul>
+      <% poll.responses.forEach(function(response) { %>
+        <li><button class="<%= response %>-button"><%= response %></button></li>
+      <% }); %>
+    </ul>
+    <script src="/client.js"></script>
+  </body>
+</html>

@@ -2,11 +2,11 @@ const http = require('http');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const generateId = require('./lib/generate-id');
+const Poll = require('./lib/poll');
 const _ = require('lodash');
 
 app.locals.title = 'Votestance';
-app.locals.polls = {};
+app.polls = {};
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -18,17 +18,17 @@ app.get('/', (request, response) => {
 });
 
 app.post('/polls', (request, response) => {
-  var id = generateId();
+  var poll = new Poll(request.body.poll);
 
-  app.locals.polls[id] = request.body.poll;
+  app.polls[poll.id] = poll;
 
-  response.redirect('/polls/' + id);
+  response.redirect('/polls/' + poll.id);
 });
 
 app.get('/polls/:id', (request, response) => {
-  var poll = app.locals.polls[request.params.id];
+  var poll = app.polls[request.params.id];
 
-  response.render('poll', { poll: poll });
+  response.render('poll', { adminPoll: poll });
 });
 
 var port = process.env.PORT || 3000;
