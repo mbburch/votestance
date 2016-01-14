@@ -69,13 +69,11 @@ describe('Server', () => {
       this.request.post('/polls', { form: payload }, (error, response) => {
         if (error) { done(error); }
 
-        var pollCount = Object.keys(app.local.polls).length;
+        var pollCount = Object.keys(app.locals.polls).length;
 
         assert.equal(pollCount, 1, `Expected 1 poll, found ${pollCount}`);
         done();
       });
-      assert(true);
-      done();
     });
 
     it('should redirect the user to their new poll admin page', (done) => {
