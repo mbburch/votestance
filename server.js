@@ -31,6 +31,15 @@ app.get('/polls/:id', (request, response) => {
   response.render('poll', { adminPoll: poll });
 });
 
+app.get('/vote/:votePageId', (request, response) => {
+  var values = _.values(app.polls);
+  var poll = _.find(values, (value) => {
+    return value.votePageId === request.params.votePageId;
+  });
+
+  response.render('vote', { voterPoll: poll });
+});
+
 var port = process.env.PORT || 3000;
 
 var server = http.createServer(app);
