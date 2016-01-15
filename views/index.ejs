@@ -11,6 +11,12 @@
         <form id="new-poll-form" action="/polls" method="post">
           <div class="row">
             <div class="input-field col s8 offset-s2">
+              <p>
+                <input name="poll[private]" type="checkbox" id="private" />
+                <label for="private">Check to keep results private.</label>
+              </p>
+            </div>
+            <div class="input-field col s8 offset-s2">
               <input required type="text" name="poll[title]" placeholder="Poll Title">
             </div>
             <div class="input-field col s8 offset-s2">
@@ -23,15 +29,16 @@
               <button id="add-response" class="btn waves-effect waves-light teal darken-3">Add a Response<i class="material-icons right">add</i></button>
             </div><br>
             <div class="submit-button center-align">
-              <button id="submit-poll" class="btn waves-effect waves-light teal darken-2" type="submit" name="action">Submit Poll<i class="material-icons right">send</i></button>
+              <button id="submit-poll" class="btn waves-effect waves-light teal darken-2" type="submit">Submit Poll<i class="material-icons right">send</i></button>
             </div>
           </div>
         </form>
       </div>
     </div>
-
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/jquery.js"></script>
-    <script src="/responses.js"></script>
+    <script src="/client.js"></script>
+    <script src="/index.js"></script>
     <% include ./partials/body-materialize %>
   </body>
 </html>

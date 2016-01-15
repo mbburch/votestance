@@ -5,20 +5,47 @@
   </head>
   <body>
     <% include ./partials/navbar %>
+    <p id="poll-id" hidden><%= pollData.id %></p>
     <div class="container">
       <div class="row">
         <div class="col s12 center-align">
-          <span class="poll-title"><h2>Poll Title: <%= voterPoll.title %></h2></span>
-          <h4 class="poll-topic">Poll Topic: <%= voterPoll.question %></h4>
-          <div class='poll-responses'>
+          <span class="poll-title"><h2>Poll Title: <%= pollData.title %></h2></span>
+          <h4 class="poll-topic">Poll Topic: <%= pollData.question %></h4>
+          <div class="poll-choices">
             <h5>Please vote for one option:</h5>
-            <% voterPoll.responses.forEach(function(response) { %>
-              <button id='<%= response %>-button' class="btn waves-effect waves-light teal darken-2"><%= response %></button>
-            <% }); %>
+            <% pollData.responses.forEach(function (response) { %>
+              <div id='poll-responses'>
+                <button class="btn waves-effect waves-light teal darken-2"><%= response %></button>
+              </div><br>
+            <% }) %>
+            <div id='user-vote'></div><br>
+          </div>
+          <div class="private-<%= pollData.private %>" id="results">
+            <h5>Current Poll Results:</h5>
+            <table class="bordered centered highight">
+              <thead>
+                <tr>
+                  <th data-field='option'>Option</th>
+                  <th data-field='votes'>Votes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% pollData.responses.forEach(function(response) { %>
+                  <tr class='<%= response %>-count'>
+                    <td><%= response %></td>
+                    <td class="vote-count" data-response="<%= response %>"><%= pollData.responseVotes[response] %></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery.js"></script>
+    <script src="/client.js"></script>
+    <script src="/vote.js"></script>
     <% include ./partials/body-materialize %>
   </body>
 </html>

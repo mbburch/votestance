@@ -29,13 +29,13 @@ app.post('/polls', (request, response) => {
 app.get('/polls/:id', (request, response) => {
   var poll = app.polls[request.params.id];
 
-  response.render('poll', { adminPoll: poll });
+  response.render('poll', { pollData: poll });
 });
 
 app.get('/vote/:votePageId', (request, response) => {
   var poll = app.polls[request.params.votePageId];
 
-  response.render('vote', { voterPoll: poll });
+  response.render('vote', { pollData: poll });
 });
 
 var port = process.env.PORT || 3000;
@@ -56,6 +56,20 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('A user has disconnected.', io.engine.clientsCount);
+  });
+
+  socket.on('message', (channel, data) => {
+    if (channel === 'voteCast') {
+      var poll = app.polls[data.poll];
+      poll.responseVotes[data.response]++;
+      io.sockets.emit('voteCount', { pollData: poll });
+    }
+  });
+
+  socket.on('message', (channel, message) => {
+    if (channel === 'userVoted') {
+      socket.emit('userVote', message);
+    }
   });
 });
 
