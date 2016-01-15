@@ -11,6 +11,13 @@
         <div class="col s12 center-align">
           <span class="poll-title"><h2>Poll Title: <%= pollData.title %></h2></span>
           <h4 class="poll-topic">Poll Topic: <%= pollData.question %></h4>
+          <div class="row" id="closed-msg" hidden>
+            <div class="center-align">
+              <div class="card-panel grey darken-2">
+                <span class="white-text">Poll is now closed. Thanks for participating!</span>
+              </div>
+            </div>
+          </div>
           <div class="poll-choices">
             <h5>Please vote for one option:</h5>
             <% pollData.responses.forEach(function (response) { %>

@@ -18,5 +18,6 @@ closePoll.addEventListener('click', function () {
 socket.on('pollClosed', (data) => {
   closePoll.disabled = true;
   document.getElementById('closed-msg').hidden = false;
+  console.log(data);
 });
 

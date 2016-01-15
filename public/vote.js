@@ -5,7 +5,7 @@ var pollId = document.getElementById('poll-id').innerText;
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function () {
-    var vote = this.innerText.toLowerCase();
+    var vote = this.innerText;
     socket.send('voteCast', { poll: pollId, response: vote });
     socket.send('userVoted', vote);
   });
@@ -27,4 +27,10 @@ socket.on('userVote', (vote) => {
   + "<span class='white-text'>You just cast your vote for: <strong>"
   + vote
   + "</strong>.</span</div></div></div>";
+});
+
+socket.on('pollClosed', (data) => {
+  document.getElementById('closed-msg').hidden = false;
+  console.log(data);
+  buttons.disabled = true;
 });

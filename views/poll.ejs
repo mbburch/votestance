@@ -30,7 +30,7 @@
                 <% pollData.responses.forEach(function(response) { %>
                   <tr class='<%= response %>-count'>
                     <td><%= response %></td>
-                    <td class="vote-count"><%= pollData.responseVotes[response] %></td>
+                    <td class="vote-count" data-response="<%= response %>"><%= pollData.responseVotes[response] %></td>
                   </tr>
                 <% }); %>
               </tbody>
