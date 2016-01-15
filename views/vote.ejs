@@ -5,21 +5,22 @@
   </head>
   <body>
     <% include ./partials/navbar %>
-    <p id="poll-id" hidden><%= voterPoll.id %></p>
+    <p id="poll-id" hidden><%= pollData.id %></p>
     <div class="container">
       <div class="row">
         <div class="col s12 center-align">
-          <span class="poll-title"><h2>Poll Title: <%= voterPoll.title %></h2></span>
-          <h4 class="poll-topic">Poll Topic: <%= voterPoll.question %></h4>
+          <span class="poll-title"><h2>Poll Title: <%= pollData.title %></h2></span>
+          <h4 class="poll-topic">Poll Topic: <%= pollData.question %></h4>
           <div class="poll-choices">
             <h5>Please vote for one option:</h5>
-            <% voterPoll.responses.forEach(function (response) { %>
+            <% pollData.responses.forEach(function (response) { %>
               <div id='poll-responses'>
                 <button class="btn waves-effect waves-light teal darken-2"><%= response %></button>
               </div><br>
             <% }) %>
+            <div id='user-vote'></div><br>
           </div>
-          <div class="private-<%= voterPoll.private %>" id="results">
+          <div class="private-<%= pollData.private %>" id="results">
             <h5>Current Poll Results:</h5>
             <table class="bordered centered highight">
               <thead>
@@ -29,10 +30,10 @@
                 </tr>
               </thead>
               <tbody>
-                <% voterPoll.responses.forEach(function(response) { %>
+                <% pollData.responses.forEach(function(response) { %>
                   <tr class='<%= response %>-count'>
                     <td><%= response %></td>
-                    <td><%= voterPoll.responseVotes[response] %></td>
+                    <td class="vote-count" data-response="<%= response %>"><%= pollData.responseVotes[response] %></td>
                   </tr>
                 <% }); %>
               </tbody>
