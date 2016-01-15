@@ -1,13 +1,12 @@
 $(".private-true").hide();
 
 var buttons = document.querySelectorAll('#poll-responses button');
-console.log(buttons);
-console.log(buttons[0].innerText);
+var pollId = document.getElementById('poll-id').innerText;
 
 for (var i = 0; i < buttons.length; i++) {
   var self = buttons[i];
   self.addEventListener('click', () => {
-    console.log(self.innerText);
-    socket.send('voteCast', self.innerText);
+    var vote = self.innerText.toLowerCase();
+    socket.send('voteCast', { poll: pollId, response: vote });
   });
 }

@@ -58,8 +58,11 @@ io.on('connection', (socket) => {
     console.log('A user has disconnected.', io.engine.clientsCount);
   });
 
-  socket.on('message', (channel, message) => {
-    console.log(channel, message);
+  socket.on('message', (channel, data) => {
+    if (channel === 'voteCast') {
+      var poll = app.polls[data.poll];
+      poll.responseVotes[data.response]++;
+    }
   });
 });
 
