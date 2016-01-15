@@ -71,6 +71,16 @@ io.on('connection', (socket) => {
       socket.emit('userVote', message);
     }
   });
+
+  socket.on('message', (channel, data) => {
+    if (channel === 'closePoll') {
+      var poll = app.polls[data.poll];
+      poll.open = data.response;
+      console.log(channel, data, poll);
+      socket.emit('pollClosed', { pollData: poll });
+    }
+  });
+
 });
 
 module.exports = app;
