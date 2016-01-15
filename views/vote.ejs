@@ -16,9 +16,30 @@
               <button id='<%= response %>-button' class="btn waves-effect waves-light teal darken-2"><%= response %></button>
             <% }); %>
           </div>
+          <div class="private-<%= voterPoll.private %>" id="results">
+            <h5>Current Poll Results:</h5>
+            <table class="bordered centered highight">
+              <thead>
+                <tr>
+                  <th data-field='option'>Option</th>
+                  <th data-field='votes'>Votes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% voterPoll.responses.forEach(function(response) { %>
+                  <tr class='<%= response %>-count'>
+                    <td><%= response %></td>
+                    <td><%= voterPoll.responseVotes[response] %></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+    <script src="/jquery.js"></script>
+    <script src="/vote.js"></script>
     <% include ./partials/body-materialize %>
   </body>
 </html>
