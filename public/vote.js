@@ -4,9 +4,8 @@ var buttons = document.querySelectorAll('#poll-responses button');
 var pollId = document.getElementById('poll-id').innerText;
 
 for (var i = 0; i < buttons.length; i++) {
-  var self = buttons[i];
-  self.addEventListener('click', () => {
-    var vote = self.innerText.toLowerCase();
+  buttons[i].addEventListener('click', function () {
+    var vote = this.innerText.toLowerCase();
     socket.send('voteCast', { poll: pollId, response: vote });
     socket.send('userVoted', vote);
   });
@@ -14,7 +13,6 @@ for (var i = 0; i < buttons.length; i++) {
 
 socket.on('voteCount', (data) => {
   var rows = document.getElementsByClassName('vote-count');
-  console.log(data, data.pollData.responseVotes);
   for (i = 0; i < rows.length; i++) {
     var votes = data.pollData.responseVotes[rows[i].dataset.response];
     rows[i].innerText = votes;
