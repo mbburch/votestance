@@ -11,12 +11,26 @@ var closePoll = document.getElementById('close-poll');
 var pollId = document.getElementById('poll-id').innerText;
 
 closePoll.addEventListener('click', function () {
-  console.log(pollId, closePoll);
   socket.send('closePoll', { poll: pollId, response: false });
 });
+
+$(document).ready(function () {
+  var timeCheck = document.getElementById('end-time');
+  var checkForEnd = timeCheck.dataset.time;
+  if (checkForEnd) {
+    timeDifference(checkForEnd);
+  } else {
+  }
+});
+
+function timeDifference(checkForEnd) {
+  if (Date.parse(checkForEnd) >= Date.now()) {
+    socket.send('closePoll', { poll: pollId, response: false });
+  }
+}
 
 socket.on('pollClosed', (data) => {
   closePoll.disabled = true;
   document.getElementById('closed-msg').hidden = false;
+  document.getElementById('end-time').hidden = true;
 });
-

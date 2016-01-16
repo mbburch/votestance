@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const Poll = require('./lib/poll');
 const _ = require('lodash');
+const moment = require('moment');
 
 app.locals.title = 'Votestance';
 app.polls = {};
@@ -19,7 +20,6 @@ app.get('/', (request, response) => {
 
 app.post('/polls', (request, response) => {
   var poll = new Poll(request.body.poll);
-
   app.polls[poll.id] = poll;
   app.polls[poll.votePageId] = poll;
 
