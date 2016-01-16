@@ -1,15 +1,17 @@
 $(".private-true").hide();
 
-var buttons = document.querySelectorAll('#poll-responses button');
 var pollId = document.getElementById('poll-id').innerText;
 
-for (var i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener('click', function () {
-    var vote = this.innerHTML;
-
-    socket.send('voteCast', { poll: pollId, response: vote });
-    socket.send('userVoted', vote);
+$(document).ready(function () {
+  $('.poll-vote').on('click', function () {
+    var vote = $(this).text();
+    sendVote(vote);
   });
+});
+
+function sendVote(vote) {
+  socket.send('voteCast', { poll: pollId, response: vote, voter: socket.id });
+  socket.send('userVoted', vote);
 }
 
 socket.on('voteCount', (data) => {

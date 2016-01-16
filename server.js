@@ -61,15 +61,13 @@ io.on('connection', (socket) => {
   socket.on('message', (channel, data) => {
     if (channel === 'voteCast') {
       var poll = app.polls[data.poll];
-      poll.responseVotes[data.response]++;
+      poll.saveResponse(data);
       io.sockets.emit('voteCount', { pollData: poll });
     }
   });
 
   socket.on('message', (channel, message) => {
     if (channel === 'userVoted') {
-      pry = require('pryjs')
-eval(pry.it)
       socket.emit('userVote', message);
     }
   });
@@ -78,8 +76,7 @@ eval(pry.it)
     if (channel === 'closePoll') {
       var poll = app.polls[data.poll];
       poll.open = data.response;
-      console.log(channel, data, poll);
-      socket.emit('pollClosed', { pollData: poll });
+      io.sockets.emit('pollClosed', { pollData: poll });
     }
   });
 
