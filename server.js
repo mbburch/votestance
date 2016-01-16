@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
   socket.on('message', (channel, data) => {
     if (channel === 'voteCast') {
       var poll = app.polls[data.poll];
-      poll.responseVotes[data.response]++;
+      poll.saveResponse(data);
       io.sockets.emit('voteCount', { pollData: poll });
     }
   });
@@ -71,6 +71,15 @@ io.on('connection', (socket) => {
       socket.emit('userVote', message);
     }
   });
+
+  socket.on('message', (channel, data) => {
+    if (channel === 'closePoll') {
+      var poll = app.polls[data.poll];
+      poll.open = data.response;
+      io.sockets.emit('pollClosed', { pollData: poll });
+    }
+  });
+
 });
 
 module.exports = app;

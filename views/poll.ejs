@@ -5,11 +5,19 @@
   </head>
   <body>
     <% include ./partials/navbar %>
+    <p id="poll-id" hidden><%= pollData.id %></p>
     <div class="container">
       <div class="row">
         <div class="col s12">
           <span class="poll-title center-align"><h2>Poll Title: <%= pollData.title %></h2></span>
           <h4 class="center-align">Poll Topic: <%= pollData.question %></h4>
+          <div class="row" id="closed-msg" hidden>
+            <div class="center-align">
+              <div class="card-panel grey darken-2">
+                <span class="white-text">Poll is now closed. These are your final results:</span>
+              </div>
+            </div>
+          </div>
           <div class='response-options'>
             <table class="bordered centered highight">
               <thead>
@@ -22,7 +30,7 @@
                 <% pollData.responses.forEach(function(response) { %>
                   <tr class='<%= response %>-count'>
                     <td><%= response %></td>
-                    <td class="vote-count"><%= pollData.responseVotes[response] %></td>
+                    <td class="vote-count" data-response="<%= response %>"><%= pollData.responseVotes[response] %></td>
                   </tr>
                 <% }); %>
               </tbody>
