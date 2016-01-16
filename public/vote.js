@@ -5,7 +5,8 @@ var pollId = document.getElementById('poll-id').innerText;
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function () {
-    var vote = this.innerText;
+    var vote = this.innerHTML;
+
     socket.send('voteCast', { poll: pollId, response: vote });
     socket.send('userVoted', vote);
   });
@@ -25,8 +26,7 @@ socket.on('userVote', (vote) => {
   userVote.innerHTML = "<div class='row'<div class='col s6 offset-3'>"
   + "<div class='card-panel grey darken-1'>"
   + "<span class='white-text'>You just cast your vote for: <strong>"
-  + vote
-  + "</strong>.</span</div></div></div>";
+  + vote + "</strong>.</span</div></div></div>";
 });
 
 socket.on('pollClosed', (data) => {

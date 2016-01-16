@@ -68,6 +68,8 @@ io.on('connection', (socket) => {
 
   socket.on('message', (channel, message) => {
     if (channel === 'userVoted') {
+      pry = require('pryjs')
+eval(pry.it)
       socket.emit('userVote', message);
     }
   });
