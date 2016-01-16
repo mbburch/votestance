@@ -1,5 +1,6 @@
 $(".private-true").hide();
 
+var buttons = document.querySelectorAll('#poll-responses button');
 var pollId = document.getElementById('poll-id').innerText;
 
 $(document).ready(function () {
@@ -33,6 +34,5 @@ socket.on('userVote', (vote) => {
 
 socket.on('pollClosed', (data) => {
   document.getElementById('closed-msg').hidden = false;
-  console.log(data);
-  buttons.disabled = true;
+  $("button").attr("disabled", true);
 });
