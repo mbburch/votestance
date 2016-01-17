@@ -201,8 +201,8 @@ describe('Server', () => {
       this.request.get('/vote/' + this.poll.votePageId, (error, response) => {
         if (error) { done(error); }
 
-        assert(response.body.includes('Current Poll Results'),
-               `"${response.body}" does not include Current Poll Results".`);
+        assert(response.body.includes('Poll Responses'),
+               `"${response.body}" does not include Poll Responses".`);
         done();
       });
     });

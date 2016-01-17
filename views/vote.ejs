@@ -9,8 +9,8 @@
     <div class="container">
       <div class="row">
         <div class="col s12 center-align">
-          <span class="poll-title"><h2>Poll Title: <%= pollData.title %></h2></span>
-          <h4 class="poll-topic">Poll Topic: <%= pollData.question %></h4>
+          <span class="poll-title"><h2 style="font-weight: lighter;">"<%= pollData.title %>"</h2></span>
+          <h3 class="poll-topic" style="font-weight: lighter;"><%= pollData.question %></h3><br>
           <div class="row" id="closed-msg" hidden>
             <div class="center-align">
               <div class="card-panel grey darken-2">
@@ -19,17 +19,17 @@
             </div>
           </div>
           <div class="poll-choices">
-            <h5>Please vote for one option:</h5>
+            <h5 style="font-weight: lighter;">Please vote for one option:</h5>
             <% pollData.responses.forEach(function (response) { %>
               <div id='poll-responses'>
-                <button class="poll-vote btn waves-effect waves-light teal darken-2"><%= response %></button>
+                <button class="poll-vote btn waves-effect waves-light green darken-1"><%= response %></button>
               </div><br>
             <% }) %>
             <div id='user-vote'></div><br>
           </div>
           <div class="private-<%= pollData.private %>" id="results">
-            <h5>Current Poll Results:</h5>
-            <table class="bordered centered highight">
+            <h4 style="font-family: 'Pacifico', serif;">Poll Responses:</h4>
+            <table class="bordered centered highlight">
               <thead>
                 <tr>
                   <th data-field='option'>Option</th>
