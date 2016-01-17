@@ -11,7 +11,7 @@
         <div class="col s12">
           <span class="poll-title center-align"><h2>Poll Title: <%= pollData.title %></h2></span>
           <h4 class="center-align">Poll Topic: <%= pollData.question %></h4>
-          <div id="end-time" data-time='<%= pollData.endtime %>'>
+          <div id="end-time" data-time='<%= pollData.endOffset %>'>
             <h5>Poll ends <%= pollData.displayEnd %></h5>
           </div>
           <div class="row" id="closed-msg" hidden>
