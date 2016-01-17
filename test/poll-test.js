@@ -31,6 +31,29 @@ describe('Poll', () => {
     assert.equal(poll.responses[2], ['yellow']);
   });
 
+  it('should have a default privacy status of false', () => {
+    var pollData = fixtures.validPoll;
+    var poll = new Poll(pollData);
+
+    assert.equal(poll.private, false);
+  });
+
+  it('should have different ids for admin and voter', () => {
+    var pollData = fixtures.validPoll;
+    var poll = new Poll(pollData);
+
+    assert.notEqual(poll.id, poll.votePageId);
+  });
+
+  it('should show an initial vote of 0 for each response', () => {
+    var pollData = fixtures.validPoll;
+    var poll = new Poll(pollData);
+
+    assert.equal(poll.responseVotes['blue'], 0);
+    assert.equal(poll.responseVotes['red'], 0);
+    assert.equal(poll.responseVotes['yellow'], 0);
+  });
+
 });
 
 
