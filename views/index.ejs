@@ -7,13 +7,13 @@
     <% include ./partials/navbar %>
     <div class="container">
       <div class="row">
-        <h2 class="form-heading center-align">Create a New Poll</h2>
+        <h2 class="form-heading center-align" style="font-family: 'Pacifico', serif;">Create a New Poll</h2>
         <form id="new-poll-form" action="/polls" method="post">
           <div class="row">
             <div class="input-field col s8 offset-s2">
               <p>
                 <input name="poll[private]" type="checkbox" id="private" />
-                <label for="private">Check to keep results private.</label>
+                <label for="private">Check to hide results from voters (optional)</label>
               </p>
             </div>
             <div class="input-field col s8 offset-s2">
@@ -26,15 +26,15 @@
               <div id="responses"><input required type="text" name="poll[responses][]" placeholder="Response"></div>
             </div>
             <div class="response-button center-align">
-              <button id="add-response" class="btn waves-effect waves-light teal darken-3">Add a Response<i class="material-icons right">add</i></button>
+              <button id="add-response" class="btn waves-effect waves-light green darken-1">Add a Response<i class="material-icons right">add</i></button>
             </div><br>
 
-            <div class="time">
+            <div class="time input-field col s8 offset-s2">
               <p>Pick a time to autoclose your poll (optional!): <input type="datetime-local" name="poll[endtime]"></p>
             </div>
 
             <div class="submit-button center-align">
-              <button id="submit-poll" class="btn waves-effect waves-light teal darken-2" type="submit">Submit Poll<i class="material-icons right">send</i></button>
+              <button id="submit-poll" class="btn waves-effect waves-light green darken-1" type="submit">Submit Poll<i class="material-icons right">send</i></button>
             </div>
           </div>
         </form>

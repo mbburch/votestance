@@ -9,8 +9,8 @@
     <div class="container">
       <div class="row">
         <div class="col s12">
-          <span class="poll-title center-align"><h2>Poll Title: <%= pollData.title %></h2></span>
-          <h4 class="center-align">Poll Topic: <%= pollData.question %></h4>
+          <span class="poll-title center-align"><h2 style="font-weight: lighter;">"<%= pollData.title %>" Administrator Page</h2></span>
+          <h4 class="center-align" style="font-weight: lighter;">Poll Topic: <%= pollData.question %></h4>
           <div id="end-time" data-time='<%= pollData.endOffset %>'>
             <h5>Poll ends <%= pollData.displayEnd %></h5>
           </div>
@@ -20,9 +20,10 @@
                 <span class="white-text">Poll is now closed. These are your final results:</span>
               </div>
             </div>
-          </div>
+          </div><br>
           <div class='response-options'>
-            <table class="bordered centered highight">
+            <h4 class='center-align' style="font-family: 'Pacifico', serif;">Poll Responses:</h4>
+            <table class="bordered centered highlight">
               <thead>
                 <tr>
                   <th data-field='option'>Option</th>
@@ -40,12 +41,12 @@
             </table>
           </div><br>
           <div class="links center-align">
-            <h5>Links:</h5>
+            <h4 style="font-family: 'Pacifico', serif;">Links:</h4>
             <p id='admin-link'>Use this link to access and manage your poll options: <a href='<%= pollData.adminUrl %>'>Poll Admin Page</a></p>
             <p id='vote-link'>Share this link to let others vote: <a href='<%= pollData.voterUrl %>'>Poll Voting Page</a></p>
           </div>
           <div class='status-<%= pollData.open %> center-align'>
-            <button id="close-poll" class="btn waves-effect waves-light teal darken-2">Close this Poll</button>
+            <button id="close-poll" class="btn waves-effect waves-light red darken-3">Close this Poll</button>
           </div>
         </div>
       </div>

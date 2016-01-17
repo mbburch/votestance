@@ -28,8 +28,8 @@ var userVote = document.getElementById('user-vote');
 socket.on('userVote', (vote) => {
   userVote.innerHTML = "<div class='row'<div class='col s6 offset-3'>"
   + "<div class='card-panel grey darken-1'>"
-  + "<span class='white-text'>You just cast your vote for: <strong>"
-  + vote + "</strong>.</span</div></div></div>";
+  + "<span class='white-text'>You voted for "
+  + vote + ".</span</div></div></div>";
 });
 
 socket.on('pollClosed', (data) => {
