@@ -24,6 +24,7 @@ $(document).ready(function () {
 
 function timeDifference(checkForEnd) {
   var timeinterval = setInterval(function () {
+    console.log(checkForEnd, Date.now());
     if(checkForEnd <= Date.now()){
       socket.send('closePoll', { poll: pollId, response: false });
       clearInterval(timeinterval);
