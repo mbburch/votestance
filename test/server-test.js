@@ -3,6 +3,7 @@ const app = require('../server');
 const request = require('request');
 const Poll = require('../lib/poll');
 const fixtures = require('./fixtures');
+const io = require('socket.io-client');
 
 describe('Server', () => {
 
@@ -44,6 +45,16 @@ describe('Server', () => {
         if (error) { done(error); }
         assert(response.body.includes(title),
           `"${response.body}" does not include "${title}".`);
+        done();
+      });
+    });
+
+    it('should have a form to submit a new poll', (done) => {
+
+      this.request.get('/', (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes('Create a New Poll'),
+          `"${response.body}" does not include Create a New Poll".`);
         done();
       });
     });
@@ -182,6 +193,26 @@ describe('Server', () => {
 
         assert(response.body.includes(this.poll.responses[0]),
                `"${response.body}" does not include "${this.poll.responses[0]}".`);
+        done();
+      });
+    });
+
+    it('should display response table if not private poll', (done) => {
+      this.request.get('/vote/' + this.poll.votePageId, (error, response) => {
+        if (error) { done(error); }
+
+        assert(response.body.includes('Current Poll Results'),
+               `"${response.body}" does not include Current Poll Results".`);
+        done();
+      });
+    });
+
+    it('should not display response table if private poll', (done) => {
+      this.poll.private = true;
+      this.request.get('/vote/' + this.poll.votePageId, (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes('class="private-true"'),
+               `"${response.body}" does not include class="private-true"".`);
         done();
       });
     });
