@@ -1,6 +1,5 @@
 socket.on('voteCount', (data) => {
   var rows = document.getElementsByClassName('vote-count');
-  console.log(data, data.pollData.responseVotes);
   for (i = 0; i < rows.length; i++) {
     var votes = data.pollData.responseVotes[rows[i].dataset.response];
     rows[i].innerText = votes;
@@ -25,7 +24,6 @@ $(document).ready(function () {
 
 function timeDifference(checkForEnd) {
   var timeinterval = setInterval(function () {
-    console.log(checkForEnd, Date.now());
     if(checkForEnd <= Date.now()){
       socket.send('closePoll', { poll: pollId, response: false });
       clearInterval(timeinterval);
