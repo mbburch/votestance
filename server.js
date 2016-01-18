@@ -66,9 +66,9 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('message', (channel, message) => {
+  socket.on('message', (channel, data) => {
     if (channel === 'userVoted') {
-      socket.emit('userVote', message);
+      socket.emit('userVote', data);
     }
   });
 
