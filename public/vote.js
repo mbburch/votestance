@@ -24,12 +24,21 @@ socket.on('voteCount', (data) => {
 });
 
 var userVote = document.getElementById('user-vote');
+var closedMessage = document.getElementById('closed-msg');
+var openStatus = closedMessage.dataset.status;
 
 socket.on('userVote', (vote) => {
-  userVote.innerHTML = "<div class='row'<div class='col s6 offset-3'>"
-  + "<div class='card-panel grey darken-1'>"
-  + "<span class='white-text'>You voted for "
-  + vote + ".</span</div></div></div>";
+  if (openStatus == 'true') {
+    userVote.innerHTML = "<div class='row'<div class='col s6 offset-3'>"
+    + "<div class='card-panel grey darken-1'>"
+    + "<span class='white-text'>You voted for "
+    + vote + ".</span</div></div></div>";
+  } else {
+    userVote.innerHTML = "<div class='row'<div class='col s6 offset-3'>"
+    + "<div class='card-panel grey darken-1'>"
+    + "<span class='white-text'>Sorry. The poll has closed.</span</div></div></div>";
+    $("button").attr("disabled", true);
+  }
 });
 
 socket.on('pollClosed', (data) => {
