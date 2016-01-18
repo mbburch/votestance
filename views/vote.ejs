@@ -11,7 +11,7 @@
         <div class="col s12 center-align">
           <span class="poll-title"><h2 style="font-weight: lighter;">"<%= pollData.title %>"</h2></span>
           <h3 class="poll-topic" style="font-weight: lighter;"><%= pollData.question %></h3><br>
-          <div class="row" id="closed-msg" hidden>
+          <div class="row" id="closed-msg" data-status="<%= pollData.open %>" hidden>
             <div class="center-align">
               <div class="card-panel grey darken-2">
                 <span class="white-text">Poll is now closed. Thanks for participating!</span>
