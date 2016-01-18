@@ -12,6 +12,7 @@ var pollId = document.getElementById('poll-id').innerText;
 $(document).ready(function () {
   var timeCheck = document.getElementById('end-time');
   var checkForEnd = timeCheck.dataset.time;
+
   if (checkForEnd != false) {
     timeDifference(checkForEnd);
   } else {
