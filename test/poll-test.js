@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const fixtures = require('./fixtures');
 const Poll = require('../lib/poll');
 
@@ -43,6 +43,22 @@ describe('Poll', () => {
     var poll = new Poll(pollData);
 
     assert.notEqual(poll.id, poll.votePageId);
+  });
+
+  it('should have a ten character id', () => {
+    var pollData = fixtures.validPoll;
+    var poll = new Poll(pollData);
+
+    assert.isString(poll.id);
+    assert.lengthOf(poll.id, 20);
+  });
+
+  it('should have a ten character votepageid', () => {
+    var pollData = fixtures.validPoll;
+    var poll = new Poll(pollData);
+
+    assert.isString(poll.votePageId);
+    assert.lengthOf(poll.votePageId, 20);
   });
 
   it('should show an initial vote of 0 for each response', () => {
