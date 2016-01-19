@@ -1,87 +1,75 @@
-const Nightmare = require('nightmare');
 const assert = require('chai').assert;
-const should = require('chai').should;
+const Browser = require('zombie');
 const app = require('../server');
-const request = require('request');
-const Poll = require('../lib/poll');
-const fixtures = require('./fixtures');
 const io = require('socket.io-client');
 
-require('mocha-generators').install();
+describe('index page', () => {
+  var server, browser, baseUrl;
 
-const base = 'http://localhost:7500/';
+  baseUrl = 'http://localhost:9876';
 
-describe('Nightmare', function () {
-
-  before((done) => {
-    this.port = 7500;
-
-    this.server = app.listen(this.port, (err, result) => {
-      if (err) { return done(err); }
-      done();
-    });
-
-    this.request = request.defaults({
-      baseUrl: 'http://localhost:7500/'
-    });
+  before(() => {
+    server = app.listen(9876);
   });
+
+
+  	beforeEach(() => {
+  		// some useful options when things go wrong:
+  		// debug: true  =  outputs debug information for zombie
+  		// waitDuration: 500  =  will only wait 500 milliseconds
+  		//   for the page to load before moving on
+  		browser = new Browser();
+  	});
 
   after(() => {
-    this.server.close();
+    server.close();
   });
 
-  it('should be constructable', function*() {
-    var nightmare = new Nightmare();
-    nightmare.should.be.ok;
-    yield nightmare.end();
-  });
-
-  describe('test filling out a form', function () {
-    var nightmare;
-
-    beforeEach(function() {
-      nightmare = new Nightmare();
-    });
-
-    afterEach(function*() {
-      yield nightmare.end();
-    });
-
-    it('should be redirected to poll admin page when poll is submitted', function*() {
-      var title = yield nightmare
-        .goto('http://localhost:7500')
-        .evaluate(function () {
-          return document.title;
-        });
-      assert.equal(title, 'Votestance');
+  it('should show form to create poll', (done) => {
+    browser.visit(baseUrl, () => {
+      assert(browser.text('.brand-logo') === 'Votestance',
+        'page title must match');
+      assert(browser.text('.form-heading') === 'Create a New Poll',
+        'page must have poll form');
+      done();
     });
   });
 
-  describe('navigation', function () {
-    var nightmare;
-
-    beforeEach(function() {
-      nightmare = Nightmare();
+  it('should have a form to add poll title', (done) => {
+    browser.visit(baseUrl, () => {
+      browser.assert.elements('form input[name="poll[title]"]', 1);
+      done();
     });
-
-    afterEach(function*() {
-      yield nightmare.end();
-    });
-
-    it('should click on a link and then go back', function*() {
-      var title = yield nightmare
-        .goto('http://localhost:7500/')
-        .click('Create a Poll')
-        .title();
-
-      title.should.equal('A');
-
-      var title = yield nightmare
-        .back()
-        .title();
-
-      title.should.equal('Navigation');
-    });
-
   });
+
+  it('should have a form to add the question', (done) => {
+    browser.visit(baseUrl, () => {
+      browser.assert.elements('form input[name="poll[question]"]', 1);
+      done();
+    });
+  });
+
+  it('should have a checkbox to keep results private', (done) => {
+    browser.visit(baseUrl, () => {
+      browser.assert.elements('form input[name="poll[private]"]', 1);
+      done();
+    });
+  });
+
+  it('should have a button to add additional responses', (done) => {
+    browser.visit(baseUrl, () => {
+      browser.assert.element('#add-response');
+      done();
+    });
+  });
+
+  it('should have a button to submit poll', (done) => {
+    browser.visit(baseUrl, () => {
+      browser.assert.element('#submit-poll');
+      assert(browser.text('#submit-poll') == 'Submit Pollsend',
+        `page must have submit button. ${browser.text('#submit-poll')}`);
+      done();
+    });
+  });
+
 });
