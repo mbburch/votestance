@@ -1,4 +1,5 @@
-const assert = require('assert');
+const chai = require('chai');
+const assert = chai.assert;
 const app = require('../server');
 const request = require('request');
 const Poll = require('../lib/poll');

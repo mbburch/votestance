@@ -22,7 +22,6 @@ app.post('/polls', (request, response) => {
   var poll = new Poll(request.body.poll);
   app.polls[poll.id] = poll;
   app.polls[poll.votePageId] = poll;
-
   response.redirect('/polls/' + poll.id);
 });
 
